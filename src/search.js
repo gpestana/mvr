@@ -50,8 +50,11 @@ var parseResults = function(raw, cb) {
   res.author = firstResult.ItemAttributes[0].Author[0] 
   res.title = firstResult.ItemAttributes[0].Title[0] 
   res.url = firstResult.DetailPageURL[0]+tag
-  res.img = firstResult.LargeImage[0]
   res.reviews = {}
+
+  res.img = firstResult.LargeImage[0]
+  res.img.Height = res.img.Height[0]._
+  res.img.Width = res.img.Width[0]._
  
   cb(res)
 }

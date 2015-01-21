@@ -1,16 +1,21 @@
-var Search = require('./src/search.js')
+var Search    = require('./src/search.js'),
+searchEngine  = new Search()
 
 var tag = "?tag=minimumviable-20"
 
-
-function main() {
-  var searchEngine = new Search()
-  var keywords = "the idiot"
-
+var search = function(keywords, cb) {
   searchEngine.search(keywords, function(res){
-    console.log(res)
+    cb(res)
   })
 }
 
+function main() {
+
+  var kw = 'wrong'
+
+  search(kw, function(res){
+    console.log(res)
+  })
+}
 
 main()
