@@ -2,26 +2,50 @@
 
 var container
 
-var el = '<div class="post"><img src="http://placehold.it/400x600"><br><br><strong>Title Goes Here</strong><br><small>Category</small></div>'
 
-var el2 = '<div class="post"><img src="http://placehold.it/600x400"><br><br><strong>Title Goes Here</strong><br><small>Category</small></div>'
+//the result should be an array with 10 entries coming from the server side
+
+//result of an hypothetical request 
+var res = [
+  {EAN: '9780316087919',
+  author: 'David H. Freedman',
+  title: 'Wrong: Why experts* keep failing us--and how to know when not...',
+  url:
+'http://www.amazon.com/Wrong-us-Scientists-relationship-consultants/dp/B005DI6QAM%3FSubscriptionId%3DAKIAIWHXC5LMOKXKM2KA%26tag%3D4949-1705-1385%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3DB005DI6QAM?tag=minimumviable-20',
+  reviews: ["This is a cool one.."],
+  loves: 0,
+  img: 'http://ecx.images-amazon.com/images/I/41pZss7iBPL.jpg'}
+]
+
 
 //appends elements in array els to the layout
 var append = function(els) {
   els.forEach(function(el) {
-    $('#posts:last-child').append(el)
+    parseEntry(el, function(parsed){
+      $('#posts:last-child').append(parsed)
+    })
+    
   })
   container.masonry('reloadItems').masonry('layout')
  }
 
-//appends first elements in the layout
-var initLayout = function() {
-  append([el, el, el2, el2, el, el, el, el2, el2, el2])
+
+var parseEntry = function(raw, cb) {
+  var start = "<div class='post'>" 
+  var img = "<img src='"+raw.img"'>"
+  var rev = "<p>"+raw.reviews[0]+"<p>"
+  var panel = "<div><a id='love' href='#'><3</a><a href='#'>+ wishlist</a>"
+  var panel_buy = "<a href='"+raw.url+"'>buy now</a></div>"
+  var finish = "</div>"
+  
+  var parsed = start+img+rev+panel+panel_buy+finish 
+  cb(parsed)
 }
 
 
 var loadMore = function() {
-  initLayout()
+  //just testing
+  append(res)
 }
 
 //triggers loadMore() at the end of the page
@@ -51,7 +75,7 @@ jQuery(window).load(function () {
   });
   
    //appends first elements
-  initLayout()
+  //initLayout()
   
   // This code fires every time a user resizes the screen and only affects .post
   // elements
